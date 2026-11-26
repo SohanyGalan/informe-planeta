@@ -343,3 +343,8 @@ img { max-width: 100%; height: auto; }
 .legal { max-width: var(--readw); margin: 0 auto; }
 .legal h2 { font-size: 1.4rem; margin: 1.8em 0 0.5em; }
 .legal .updated { font-size: 0.9rem; color: var(--muted); }
+
+/* ---------- Informes relacionados ---------- */
+.related { margin: 48px 0 8px; }
+.related h2 { font-size: 1.35rem; margin: 0 0 18px; }
+.byline a { color: inherit; font-weight: 600; }
