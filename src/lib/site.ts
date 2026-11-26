@@ -5,8 +5,10 @@ export const site = {
     "Informe digital divulgativo sobre el estado de los ecosistemas del planeta: datos verificados, análisis de la crisis ambiental y guías prácticas de acción sostenible.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
   locale: "es_ES",
-  contactEmail: "contacto@tudominio.com",
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contacto@tudominio.com",
   adsenseClient: process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "",
+  /** ID del bloque de anuncio manual que se muestra al final de cada informe. */
+  adsenseArticleSlot: process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE || "",
 };
 
 export type SectionSlug = "ecosistemas" | "crisis-y-datos" | "accion-sostenible" | "dossiers";

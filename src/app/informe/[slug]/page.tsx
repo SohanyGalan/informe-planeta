@@ -7,7 +7,8 @@ import ChapterNav from "@/components/report/ChapterNav";
 import MdxContent from "@/components/report/MdxContent";
 import AdSlot from "@/components/ads/AdSlot";
 import ReportCover from "@/components/report/ReportCover";
-import { formatDate, getAdjacent, getAllReports, getReport } from "@/lib/reports";
+import ReportCard from "@/components/report/ReportCard";
+import { formatDate, getAdjacent, getAllReports, getReport, getReportsBySection } from "@/lib/reports";
 import { getSection, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -43,6 +44,7 @@ export default async function ReportPage({ params }: Params) {
   if (!report) notFound();
   const section = getSection(report.section)!;
   const { prev, next } = getAdjacent(slug);
+  const related = getReportsBySection(report.section).filter((r) => r.slug !== slug).slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -73,6 +75,9 @@ export default async function ReportPage({ params }: Params) {
         <h1>{report.title}</h1>
         <p className="dek">{report.description}</p>
         <div className="article-meta">
+          <span className="byline">
+            Por <Link href="/sobre-el-proyecto" rel="author">Equipo editorial de {site.name}</Link>
+          </span>
           <span>
             {section.chapter} · {section.name}
           </span>
@@ -90,7 +95,7 @@ export default async function ReportPage({ params }: Params) {
         <MdxContent source={report.content} />
       </div>
 
-      <AdSlot slot="0000000000" />
+      <AdSlot slot={site.adsenseArticleSlot} />
 
       {report.sources.length > 0 && (
         <section className="sources-box" aria-labelledby="fuentes-informe">
@@ -108,6 +113,17 @@ export default async function ReportPage({ params }: Params) {
               </li>
             ))}
           </ol>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section className="related" aria-labelledby="relacionados">
+          <h2 id="relacionados">Más informes de {section.name}</h2>
+          <div className="cards-grid">
+            {related.map((r) => (
+              <ReportCard key={r.slug} report={r} />
+            ))}
+          </div>
         </section>
       )}
 

@@ -27,8 +27,19 @@ Copia `.env.example` a `.env.local` y rellena:
 | `NEXT_PUBLIC_SITE_URL` | URL pública del sitio (sitemap, canónicas, Open Graph) |
 | `NEXT_PUBLIC_ADSENSE_CLIENT` | ID de editor `ca-pub-…`; si está vacío no se carga AdSense |
 | `NEXT_PUBLIC_USE_GOOGLE_CMP` | `true` para usar la CMP certificada de Google en lugar del aviso propio |
+| `NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE` | ID del bloque manual (`data-ad-slot`) al final de cada informe; vacío = sin bloque |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Correo real de contacto (debe funcionar: AdSense lo revisa) |
 
-Ajusta también el correo de contacto en `src/lib/site.ts` y tu ID de editor en `public/ads.txt`.
+Sustituye también `pub-0000000000000000` por tu ID de editor en `public/ads.txt` (el mismo número que `ca-pub-…`, sin `ca-`).
+
+### Dónde se muestran anuncios
+
+- **Habilitados:** solo `/informe/[slug]`, con un bloque manual tras el cuerpo del informe (antes de las fuentes).
+- **Bloqueados:** `/`, `/seccion/*`, `/sobre-el-proyecto` (y `/acerca-de`), `/fuentes`, `/contacto`, `/privacidad`, `/cookies`, `/terminos` y la página 404.
+
+El script de AdSense se carga en todas las páginas (Google lo necesita para verificar el sitio). Si activas **anuncios automáticos** en el panel, añade en *Anuncios > Exclusiones de páginas* las rutas bloqueadas para que Google no inserte anuncios en ellas.
+
+Para tráfico del EEE, Reino Unido y Suiza crea un mensaje de consentimiento en *AdSense > Privacidad y mensajes* (CMP certificada, TCF v2.3) y pon `NEXT_PUBLIC_USE_GOOGLE_CMP=true`.
 
 ## Añadir un informe
 

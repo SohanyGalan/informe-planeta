@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import LegalPage from "@/components/layout/LegalPage";
 import { site } from "@/lib/site";
+import CookieSettingsButton from "@/components/consent/CookieSettingsButton";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Política de privacidad" updated="24 de noviembre de 2026">
+    <LegalPage title="Política de privacidad" updated="26 de noviembre de 2026">
       <p>
         En {site.name} respetamos tu privacidad. Esta política explica qué datos se recogen cuando visitas el
         sitio, con qué finalidad y qué derechos tienes.
@@ -51,6 +52,20 @@ export default function PrivacyPage() {
           policies.google.com/technologies/partner-sites
         </a>
         .
+      </p>
+
+      <h2>Gestionar tu consentimiento</h2>
+      <p>
+        Al entrar por primera vez te mostramos un aviso para aceptar, rechazar o configurar por categorías las
+        cookies de publicidad y analítica. Si las rechazas, Google solo mostrará anuncios no personalizados.
+        Puedes cambiar tu elección en cualquier momento con el botón «Configurar cookies» del pie de página o
+        desde aquí: <CookieSettingsButton label="cambiar mis preferencias de cookies" />. Para visitantes del
+        Espacio Económico Europeo, Reino Unido y Suiza, el sitio puede usar la plataforma de gestión del
+        consentimiento certificada por Google, compatible con el marco TCF de IAB.
+      </p>
+      <p>
+        No enviamos a los servicios publicitarios datos personales identificables como tu nombre, correo o
+        teléfono.
       </p>
 
       <h2>Finalidad y base legal</h2>

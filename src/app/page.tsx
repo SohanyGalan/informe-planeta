@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import StatCard from "@/components/report/StatCard";
 import ReportCard from "@/components/report/ReportCard";
@@ -5,6 +6,8 @@ import PlanetPanel from "@/components/planet/PlanetPanel";
 import { globalStats } from "@/data/globalStats";
 import { getLatestReports, getReportsBySection } from "@/lib/reports";
 import { sections, site } from "@/lib/site";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default function HomePage() {
   const latest = getLatestReports(6);

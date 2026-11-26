@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -25,6 +24,16 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  inLanguage: "es",
+  publisher: { "@type": "Organization", name: site.name, url: site.url },
+};
+
 export const viewport: Viewport = { themeColor: "#faf8f3" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -33,6 +42,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Consent Mode v2: valores por defecto antes de cargar cualquier etiqueta de Google */}
         {!googleCmpEnabled && <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />}
+        {/* Código oficial de AdSense, asíncrono y sin modificar. Solo se carga si hay ID de editor. */}
+        {site.adsenseClient && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.adsenseClient}`}
+            crossOrigin="anonymous"
+          />
+        )}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
       </head>
       <body>
         <a href="#contenido" className="skip">
@@ -42,15 +60,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="contenido">{children}</main>
         <Footer />
         <ConsentBanner />
-        {site.adsenseClient && (
-          <Script
-            id="adsense"
-            async
-            strategy="afterInteractive"
-            crossOrigin="anonymous"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.adsenseClient}`}
-          />
-        )}
       </body>
     </html>
   );

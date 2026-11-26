@@ -13,13 +13,14 @@ type Props = { slot: string; format?: "auto" | "fluid" | "rectangle"; minHeight?
 
 /**
  * Bloque de anuncio con altura reservada para evitar saltos de diseño (CLS).
- * No renderiza nada mientras no exista NEXT_PUBLIC_ADSENSE_CLIENT.
+ * No renderiza nada mientras no existan el ID de editor y el ID del bloque.
+ * Solo se usa en informes (contenido editorial); nunca en 404, legales, contacto ni secciones.
  */
 export default function AdSlot({ slot, format = "auto", minHeight = 280 }: Props) {
   const pushed = useRef(false);
 
   useEffect(() => {
-    if (!site.adsenseClient || pushed.current) return;
+    if (!site.adsenseClient || !slot || pushed.current) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       pushed.current = true;
@@ -28,7 +29,7 @@ export default function AdSlot({ slot, format = "auto", minHeight = 280 }: Props
     }
   }, []);
 
-  if (!site.adsenseClient) return null;
+  if (!site.adsenseClient || !slot) return null;
 
   return (
     <aside className="ad-slot" style={{ minHeight }} aria-label="Publicidad">
